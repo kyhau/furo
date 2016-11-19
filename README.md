@@ -1,1 +1,3 @@
-# furo
+# k-salt
+
+My salt repo
