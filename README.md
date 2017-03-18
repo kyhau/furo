@@ -8,6 +8,17 @@ My salt repo.
 - [Install salt-minion on a minion](#install-salt-minion-on-a-minion)
 - [FAQ / Troubleshooting](#faq---troubleshooting)
 
+### Install salt-master or salt-minion using [Salt Bootstrap](https://docs.saltstack.com/en/latest/topics/tutorials/salt_bootstrap.html)
+
+E.g. Install a specific release version based on the Git tags:
+```bash
+curl -o bootstrap-salt.sh -L https://bootstrap.saltstack.com
+sudo sh bootstrap-salt.sh git v2015.8.8
+sed -i -e 's/#master: salt/master: [salt_master_fqdn]/g' /etc/salt/minion
+service salt-minion restart
+```
+
+Or do it manually as follow.
 
 ### Install salt-master and salt-minion on the master machine
 
