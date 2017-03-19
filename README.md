@@ -4,6 +4,7 @@ My salt repo.
 
 ##### Table of Contents
 
+- [Install salt-master or salt-minion using Salt Bootstrap](#install-salt-master-or-salt-minion-using-salt-bootstrap)
 - [Install salt-master and salt-minion on the master machine](#install-salt-master-and-salt-minion-on-the-master-machine)
 - [Install salt-minion on a minion](#install-salt-minion-on-a-minion)
 - [FAQ / Troubleshooting](#faq---troubleshooting)
