@@ -5,97 +5,32 @@ My salt repo.
 ##### Table of Contents
 
 - [Install salt-master or salt-minion using Salt Bootstrap](#install-salt-master-or-salt-minion-using-salt-bootstrap)
-- [Install salt-master and salt-minion on the master machine](#install-salt-master-and-salt-minion-on-the-master-machine)
-- [Install salt-minion on a minion](#install-salt-minion-on-a-minion)
 - [FAQ / Troubleshooting](#faq---troubleshooting)
 
-### Install salt-master or salt-minion using [Salt Bootstrap](https://docs.saltstack.com/en/latest/topics/tutorials/salt_bootstrap.html)
+### Install salt-master and salt-minion using [Salt Bootstrap](https://docs.saltstack.com/en/latest/topics/tutorials/salt_bootstrap.html)
 
-E.g. Install a specific release version based on the Git tags:
+Install a specific release version based on the Git tags:
+
 ```bash
+#!/bin/bash -xe
 curl -o bootstrap-salt.sh -L https://bootstrap.saltstack.com
-sudo sh bootstrap-salt.sh git v2015.8.8
-sed -i -e 's/#master: salt/master: [salt_master_fqdn]/g' /etc/salt/minion
+sudo sh bootstrap-salt.sh -P -M git v2016.11.3
+sudo mkdir -p /srv/{salt,pillar}
+sed -i -e 's/#master: salt/master: 127.0.0.1/g' /etc/salt/minion
+service salt-master restart
 service salt-minion restart
+sudo salt-key -A -y
 ```
 
-Or do it manually as follow.
+Install only salt-minion:
 
-### Install salt-master and salt-minion on the master machine
-
-   **Ubuntu 16**
-
-   ```bash
-   wget -O - https://repo.saltstack.com/apt/ubuntu/16.04/amd64/latest/SALTSTACK-GPG-KEY.pub | sudo apt-key add -
-   mkdir -p /etc/apt/sources.list.d/
-   cat "deb http://repo.saltstack.com/apt/ubuntu/16.04/amd64/latest xenial main" >> /etc/apt/sources.list.d/saltstack.list
-   apt-get update
-   apt-get install salt-master salt-minion salt-ssh salt-cloud salt-doc
-   ```
-
-See [how-to-install-and-configure-salt-master-and-minion-servers-on-ubuntu-14-04](https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-salt-master-and-minion-servers-on-ubuntu-14-04)
-  for detailed steps.
-
-#### salt-master ports
-
-- 4505 : `publish_port` - The network port to set up the publication interface.
-- 4506 : `ret_port` - The port used by the return server, this is the server used
- by Salt to receive execution returns and command executions.
- Add these port to the Security Group of a salt-master instance. 
-
-### Install salt-minion on a minion
-
-1. Install the latest installation from the [SaltStack repository](https://repo.saltstack.com/#ubuntu).
-
-   *Notes: The master should always be [updated first](https://docs.saltstack.com/en/latest/topics/installation/index.html#upgrading-salt)!
-   See also [SaltStack Installation](https://docs.saltstack.com/en/latest/topics/installation/ubuntu.html)*
-
-   **Ubuntu 16**
-
-   ```bash
-   sudo wget -O - https://repo.saltstack.com/apt/ubuntu/16.04/amd64/latest/SALTSTACK-GPG-KEY.pub | sudo apt-key add -
-   sudo mkdir -p /etc/apt/sources.list.d/
-   echo "deb http://repo.saltstack.com/apt/ubuntu/16.04/amd64/latest xenial main" >> /etc/apt/sources.list.d/saltstack.list
-   sudo apt update
-   sudo apt install salt-minion
-   cat /etc/salt/minion_id             # to confirm minion id is the same as hostname
-   ```
-
-   **Ubuntu 14**
-    
-   ```bash
-   sudo wget -O - https://repo.saltstack.com/apt/ubuntu/14.04/amd64/latest/SALTSTACK-GPG-KEY.pub | sudo apt-key add -
-   echo "deb http://repo.saltstack.com/apt/ubuntu/14.04/amd64/latest trusty main" >> /etc/apt/sources.list
-   sudo apt-get update
-   sudo apt-get install salt-minion
-   cat /etc/salt/minion_id             # to confirm minion id is the same as hostname
-   ```
-
-1. Configure salt-minion for connectivity to master.
-
-   ```bash
-   sudo vi /etc/salt/minion            # configure for master
-  
-   master: master.example.com
-
-   # Setup master fingerprint
-   master_finger: '' # (use salt-master's public key)
-
-   sudo service salt-minion restart
-   ```
-
-1. Salt-master to accept a new minion key.
-
-   ```bash
-   # At salt-master
-   sudo salt-key -L
-
-   sudo salt-key -L                         # check to see if key is available
-   sudo salt-key -a <minion-key>            # Accept the new minion key
-
-   # Check that the server is up
-   sudo salt-run manage.status
-   ```
+```bash
+#!/bin/bash -xe
+curl -o bootstrap-salt.sh -L https://bootstrap.saltstack.com
+sudo sh bootstrap-salt.sh git v2016.11.3
+sed -i -e 's/#master: salt/master: $salt_master_host_or_ip/g' /etc/salt/minion
+service salt-minion restart
+```
    
 ## FAQ / Troubleshooting
 
