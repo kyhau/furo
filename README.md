@@ -4,9 +4,9 @@ My salt repo.
 
 ##### Table of Contents
 
-- [Install salt-master or salt-minion using Salt Bootstrap](#install-salt-master-or-salt-minion-using-salt-bootstrap-on-ubuntu)
+- [Install salt-master or salt-minion using Salt Bootstrap](#install-salt-master-and-salt-minion-using-salt-bootstrap-on-ubuntu)
 - [Install salt-minion on Windows](#install-salt-minion-on-windows)
-- [FAQ / Troubleshooting](#faq---troubleshooting)
+- [FAQ or Troubleshooting](#faq-or-troubleshooting)
 
 ## Install salt-master and salt-minion using [Salt Bootstrap](https://docs.saltstack.com/en/latest/topics/tutorials/salt_bootstrap.html) on Ubuntu
 
@@ -43,7 +43,7 @@ See http://salt-private.readthedocs.io/en/latest/topics/installation/windows.htm
 
 See https://docs.saltstack.com/en/latest/topics/windows/windows-package-manager.html
 
-## FAQ / Troubleshooting
+## FAQ or Troubleshooting
 
 - From version 2016.11.0, the tar_options and zip_options arguments have been deprecated in favor of a single options argument.
 
