@@ -4,10 +4,11 @@ My salt repo.
 
 ##### Table of Contents
 
-- [Install salt-master or salt-minion using Salt Bootstrap](#install-salt-master-or-salt-minion-using-salt-bootstrap)
+- [Install salt-master or salt-minion using Salt Bootstrap](#install-salt-master-or-salt-minion-using-salt-bootstrap-on-ubuntu)
+- [Install salt-minion on Windows](#install-salt-minion-on-windows)
 - [FAQ / Troubleshooting](#faq---troubleshooting)
 
-### Install salt-master and salt-minion using [Salt Bootstrap](https://docs.saltstack.com/en/latest/topics/tutorials/salt_bootstrap.html)
+## Install salt-master and salt-minion using [Salt Bootstrap](https://docs.saltstack.com/en/latest/topics/tutorials/salt_bootstrap.html) on Ubuntu
 
 Install a specific release version based on the Git tags:
 
@@ -32,6 +33,16 @@ sed -i -e 's/#master: salt/master: $salt_master_host_or_ip/g' /etc/salt/minion
 service salt-minion restart
 ```
    
+## Install salt-minion on Windows
+
+> Salt has full support for running the Salt Minion on Windows.
+> 
+> There are no plans for the foreseeable future to develop a Salt Master on Windows. For now you must run your Salt Master on a supported operating system to control your Salt Minions on Windows.
+
+See http://salt-private.readthedocs.io/en/latest/topics/installation/windows.html
+
+See https://docs.saltstack.com/en/latest/topics/windows/windows-package-manager.html
+
 ## FAQ / Troubleshooting
 
 - From version 2016.11.0, the tar_options and zip_options arguments have been deprecated in favor of a single options argument.
